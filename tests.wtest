@@ -1,0 +1,18 @@
+import TP.*
+
+describe "Guerrero" {
+
+const goku = new Guerrero (potencial = 100, energiaOriginal = 1000)
+const vegeta = new Guerrero (potencial = 80, energiaOriginal = 800)
+
+test "cuando goku ataca a vegeta, baja la energia de vegeta" {
+        goku.atacar(vegeta)
+        assert.equals(4990, vegeta.energiaActual())
+    }
+
+test "cuando goku ataca a vegeta, la experiencia de vegeta aumenta en 1" {
+        goku.atacar(vegeta)
+        assert.equals(1, vegeta.experiencia())
+    }
+}
+
