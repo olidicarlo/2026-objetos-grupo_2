@@ -7,7 +7,7 @@ const vegeta = new Guerrero (potencial = 80, energiaOriginal = 800)
 
 test "cuando goku ataca a vegeta, baja la energia de vegeta" {
         goku.atacar(vegeta)
-        assert.equals(4990, vegeta.energiaActual())
+        assert.equals(790, vegeta.energiaActual())
     }
 
 test "cuando goku ataca a vegeta, la experiencia de vegeta aumenta en 1" {
