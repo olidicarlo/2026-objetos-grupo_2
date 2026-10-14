@@ -16,3 +16,34 @@ test "cuando goku ataca a vegeta, la experiencia de vegeta aumenta en 1" {
     }
 }
 
+test "traje comun del 3% reduce el daño" {
+    const goku = new Guerrero(potencial = 100, energiaOriginal = 5000)
+    const vegeta = new Guerrero(potencial = 80, energiaOriginal = 5000,
+        traje = new TrajeComun(proteccion = 0.03))
+    goku.atacar(vegeta)
+    assert.equals(4993, vegeta.energiaActual())
+}
+
+test "traje de entrenamiento no reduce el daño" {
+    const goku = new Guerrero(potencial = 100, energiaOriginal = 5000)
+    const vegeta = new Guerrero(potencial = 80, energiaOriginal = 5000,
+        traje = new TrajeEntrenamiento())
+    goku.atacar(vegeta)
+    assert.equals(4990, vegeta.energiaActual())
+}
+
+test "traje de entrenamiento duplica la experiencia" {
+    const goku = new Guerrero(potencial = 100, energiaOriginal = 5000)
+    const vegeta = new Guerrero(potencial = 80, energiaOriginal = 5000,
+        traje = new TrajeEntrenamiento())
+    goku.atacar(vegeta)
+    assert.equals(2, vegeta.experiencia())
+}
+
+test "se puede cambiar el traje antes de la batalla" {
+    const goku = new Guerrero(potencial = 100, energiaOriginal = 5000)
+    const vegeta = new Guerrero(potencial = 80, energiaOriginal = 5000)
+    vegeta.traje(new TrajeComun(proteccion = 0.03))
+    goku.atacar(vegeta)
+    assert.equals(4993, vegeta.energiaActual())
+}
