@@ -18,6 +18,8 @@ class Guerrero {
         const danio = (potencialAtacante * porcentajeDanio - traje.absorcionDeDanio(potencialAtacante)).max(0)
         energiaActual = (energiaActual - danio).max(0)
         experiencia += traje.experienciaGanada()
+
+        traje.usoDeTraje()
     }
     method atacar(otroGuerrero){
         otroGuerrero.recibirAtaque(potencial)
@@ -29,26 +31,45 @@ class Guerrero {
 
 }
 
-class TrajeComun{
-    const proteccion
+class Traje {
+    var desgaste = 0
 
-    method absorcionDeDanio(potencialAtacante){
-        return potencialAtacante * proteccion 
+    method usoDeTraje(){
+        desgaste = (desgaste + 5).min(100)
     }
 
-    method experienciaGanada(){
+    method trajeSano() {
+        return (100 - desgaste).min(1)
+    }
+
+    method estaGastado(){
+    return desgaste >= 100
+    }
+
+    method absorcionDeDanio(potencialAtacante)
+    method experienciaGanada()
+}
+
+class TrajeComun inherits Traje{
+    const proteccion
+
+    override method absorcionDeDanio(potencialAtacante){
+        return (potencialAtacante * proteccion) * self.trajeSano() 
+    }
+
+    override method experienciaGanada(){
         return 1
     }
 }
 
-class TrajeEntrenamiento{
+class TrajeEntrenamiento inherits Traje{
 
-    method absorcionDeDanio(potencialAtacante){
+    override method absorcionDeDanio(potencialAtacante){
         return 0
     }
 
-    method experienciaGanada(){
-        return 1 * multiplicadorExp.multiplicadorActual()
+    override method experienciaGanada(){
+        return 1 + (multiplicadorExp.multiplicadorActual() - 1) * self.trajeSano()
     }
 }
 
