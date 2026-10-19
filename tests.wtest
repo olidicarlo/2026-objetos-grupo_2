@@ -88,3 +88,18 @@ test "un traje modularizado protege" {
     goku.atacar(vegeta)
     assert.equals(4995, vegeta.energiaActual())
 }
+
+//Test punto 5
+
+    test "Torneo PowerIsBest selecciona los peleadores con mayor potencial" {
+        const g1 = new Guerrero(potencial = 10, energiaOriginal = 1000)
+        const g2 = new Guerrero(potencial = 50, energiaOriginal = 1000)
+        const g3 = new Guerrero(potencial = 100, energiaOriginal = 1000)
+        const g4 = new Guerrero(potencial = 20, energiaOriginal = 1000)
+
+        const torneoPower = new TorneoPowerIsBest(participantesInscriptos = [g1, g2, g3, g4])
+        const seleccionados = torneoPower.seleccionarParticipantes()
+
+        assert.equals(g3, seleccionados.get(0))
+        assert.equals(g2, seleccionados.get(1))
+    }

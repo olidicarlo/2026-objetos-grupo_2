@@ -128,3 +128,32 @@ class Pieza {
         return ((desgaste / 20).min(1)) * 100
     }
 }
+
+class Torneo {
+    const participantesInscriptos = []
+
+    method seleccionarParticipantes()
+}
+
+class TorneoPowerIsBest inherits Torneo {
+    override method seleccionarParticipantes() {
+        return participantesInscriptos
+            .sortedBy({ g1, g2 => g1.potencial() > g2.potencial() })
+            .take(16)
+    }
+}
+
+class TorneoFunny inherits Torneo {
+    override method seleccionarParticipantes() {
+        return participantesInscriptos
+            .sortedBy({ g1, g2 => g1.traje().cantidadDePiezas() > g2.traje().cantidadDePiezas() })
+            .take(16)
+    }
+}
+
+class TorneoSurprise inherits Torneo {
+    override method seleccionarParticipantes() {
+        return participantesInscriptos.asList().any()
+    }
+}
+
