@@ -3,11 +3,11 @@ import TP.*
 describe "Guerrero" {
 
 const goku = new Guerrero (potencial = 100, energiaOriginal = 1000)
-const vegeta = new Guerrero (potencial = 80, energiaOriginal = 800)
+const vegeta = new Guerrero (potencial = 80, energiaOriginal = 5000)
 
 test "cuando goku ataca a vegeta, baja la energia de vegeta" {
         goku.atacar(vegeta)
-        assert.equals(790, vegeta.energiaActual())
+        assert.equals(4990, vegeta.energiaActual())
     }
 
 test "cuando goku ataca a vegeta, la experiencia de vegeta aumenta en 1" {
@@ -76,4 +76,15 @@ test "un traje de entrenamiento gastado ya no duplica la experiencia" {
     20.times({ i => goku.atacar(vegeta) })   // 20 ataques * 2 = 40 de experiencia
     goku.atacar(vegeta)                      // el 21 suma 1 (traje gastado)
     assert.equals(41, vegeta.experiencia())
+}
+
+// Test punto 4
+
+test "un traje modularizado protege" {
+    const goku = new Guerrero(potencial = 100, energiaOriginal = 5000)
+    const vegeta = new Guerrero(potencial = 80, energiaOriginal = 5000, traje = new TrajeModularizado())
+    vegeta.traje().agregarPieza(4)
+    vegeta.traje().agregarPieza(1)
+    goku.atacar(vegeta)
+    assert.equals(4995, vegeta.energiaActual())
 }

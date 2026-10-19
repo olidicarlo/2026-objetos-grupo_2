@@ -77,3 +77,54 @@ object multiplicadorExp {
     var property multiplicadorActual = 2
 // Como el enunciado dice q puede ser modificado a futuro, lo dejo como un unico objeto que puede ser modificado por fuer (prperty)
 }
+
+class TrajeModularizado inherits Traje {
+    const property piezas = []
+
+    method agregarPieza(_resistencia) {
+        const pieza = new Pieza(porcentajeResistencia = _resistencia)
+        piezas.add(pieza)
+    }
+
+    method piezasNoGastadas() {
+        return piezas.filter({ pieza => not pieza.estaGastada() })
+    }
+
+    method totalResistencia() {
+        return self.piezasNoGastadas().sum({ pieza => pieza.porcentajeResistencia() })
+    }
+
+    method porcentajeNoGastado() {
+        return self.piezasNoGastadas().size() / piezas.size()
+    }
+
+    override method usoDeTraje() {
+        piezas.forEach({ pieza => pieza.uso() })
+        desgaste = ((piezas.size() - self.piezasNoGastadas().size()) * 100) / piezas.size()
+    }
+
+    override method estaGastado() = piezas.all({ pieza => pieza.estaGastada() }) || piezas.isEmpty()
+
+    override method absorcionDeDanio(_danio) {
+        return self.totalResistencia()
+    }
+
+    override method experienciaGanada() {
+        return 1 + (1 * self.porcentajeNoGastado())
+    }
+}
+
+class Pieza {
+    const property porcentajeResistencia
+    var property desgaste = 0
+
+    method estaGastada() = self.desgaste() >= 20
+
+    method uso() {
+        desgaste = desgaste + 5
+    }
+
+    method porcentajeDesgaste() {
+        return ((desgaste / 20).min(1)) * 100
+    }
+}
