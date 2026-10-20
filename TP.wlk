@@ -90,10 +90,6 @@ class TrajeModularizado inherits Traje {
         return piezas.filter({ pieza => not pieza.estaGastada() })
     }
 
-    method totalResistencia() {
-        return self.piezasNoGastadas().sum({ pieza => pieza.porcentajeResistencia() })
-    }
-
     method porcentajeNoGastado() {
         return self.piezasNoGastadas().size() / piezas.size()
     }
@@ -106,11 +102,15 @@ class TrajeModularizado inherits Traje {
     override method estaGastado() = piezas.all({ pieza => pieza.estaGastada() }) || piezas.isEmpty()
 
     override method absorcionDeDanio(_danio) {
-        return self.totalResistencia()
+        return self.piezasNoGastadas().sum({ pieza => pieza.porcentajeResistencia() })
     }
 
     override method experienciaGanada() {
         return 1 + (1 * self.porcentajeNoGastado())
+    }
+
+    override method cantidadDePiezas() {
+        return piezas.size()
     }
 }
 
@@ -122,10 +122,6 @@ class Pieza {
 
     method uso() {
         desgaste = desgaste + 5
-    }
-
-    method porcentajeDesgaste() {
-        return ((desgaste / 20).min(1)) * 100
     }
 }
 
@@ -156,4 +152,3 @@ class TorneoSurprise inherits Torneo {
         return participantesInscriptos.shuffled().take(16)
     }
 }
-
