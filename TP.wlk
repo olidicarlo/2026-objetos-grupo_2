@@ -123,10 +123,6 @@ class Pieza {
     method uso() {
         desgaste = desgaste + 5
     }
-
-    method porcentajeDesgaste() {
-        return ((desgaste / 20).min(1)) * 100
-    }
 }
 
 class Torneo {
